@@ -11,7 +11,7 @@ type TodoListPropsType = {
     onKeyPressHandler: (event: KeyboardEvent<HTMLInputElement>) => void
     input: string
     setInput: (input: string) => void
-    onClickFilterHandler: () => void
+    onClickFilterHandler: (filter: MouseEvent<HTMLButtonElement>) => void
     error: string | null
 }
 //презентационная компонента
@@ -21,7 +21,6 @@ export const Todolist: React.FC<TodoListPropsType> = ({
                                                           onKeyPressHandler, error, input, setInput,
                                                           onClickFilterHandler, ...props
                                                       }) => {
-
     return (
         <div>
             <h3>What to learn</h3>
