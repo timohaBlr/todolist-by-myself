@@ -7,3 +7,12 @@
 .errorMessage {
     color: red;
 }
+.error {
+    border: solid 3px red;
+}
+.active {
+    background-color: aquamarine;
+}
+.isDone {
+    opacity: 0.5;
+}

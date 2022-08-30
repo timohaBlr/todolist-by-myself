@@ -8,7 +8,7 @@ export type TaskType = {
     isDone: boolean
 }
 type TodolistContainerPropsType = {}
-type FilterValuesType = 'all' | 'active' | 'completed'
+export type FilterValuesType = 'all' | 'active' | 'completed'
 
 export const TodolistContainer: React.FC<TodolistContainerPropsType> = ({...props}) => {
     const [tasks, setTasks] = useState<Array<TaskType>>([
@@ -22,7 +22,6 @@ export const TodolistContainer: React.FC<TodolistContainerPropsType> = ({...prop
     const [input, setInput] = useState<string>('');
     const [error, setError] = useState<string | null>(null)
     const [filter, setFilter] = useState<FilterValuesType>('all')
-
 
     const buttonOnClickRemoveHandler = (id: string) => {
         setTasks(tasks.filter(f => f.id !== id))
@@ -56,8 +55,6 @@ export const TodolistContainer: React.FC<TodolistContainerPropsType> = ({...prop
     }
     const filteredTasks = filter === 'active' ? tasks.filter(f => !f.isDone)
         : filter === 'completed' ? tasks.filter(f => f.isDone) : tasks
-
-
     return (
         <div>
             <div>
@@ -71,7 +68,8 @@ export const TodolistContainer: React.FC<TodolistContainerPropsType> = ({...prop
                     inputOnChangeHandler={inputOnChangeHandler}
                     onKeyPressHandler={onKeyPressHandler}
                     error={error}
-                    onClickFilterHandler={onClickFilterHandler}/>
+                    onClickFilterHandler={onClickFilterHandler}
+                    filter={filter}/>
             </div>
         </div>
     );
