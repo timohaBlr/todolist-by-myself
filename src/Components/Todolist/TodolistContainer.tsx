@@ -23,8 +23,8 @@ export const TodolistContainer: React.FC<TodolistContainerPropsType> = ({...prop
     const [error, setError] = useState<string | null>(null)
     const [filter, setFilter] = useState<FilterValuesType>('all')
 
-    const buttonOnClickRemoveHandler = () => {
-
+    const buttonOnClickRemoveHandler = (id: string) => {
+        setTasks(tasks.filter(f => f.id !==id))
     }
     const buttonOnClickAddHandler = () => {
         addTask(input.trim())

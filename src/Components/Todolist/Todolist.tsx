@@ -4,7 +4,7 @@ import s from './Todolist.module.css'
 
 type TodoListPropsType = {
     tasks: Array<TaskType>
-    buttonOnClickRemoveHandler: () => void
+    buttonOnClickRemoveHandler: (id: string) => void
     buttonOnClickAddHandler: () => void
     checkBoxOnChangeHandler: (id: string, isDone: boolean) => void
     inputOnChangeHandler: (event: ChangeEvent<HTMLInputElement>) => void
@@ -35,7 +35,7 @@ export const Todolist: React.FC<TodoListPropsType> = ({
             <ul>
                 {tasks.map(m => <li key={m.id}>
                     <div className={s.buttonRemove}>
-                        <button onClick={buttonOnClickRemoveHandler}>X</button>
+                        <button onClick={(event) => buttonOnClickRemoveHandler(m.id)}>X</button>
                     </div>
                     <div className={s.checkBox}>
                         <input type={"checkbox"}
