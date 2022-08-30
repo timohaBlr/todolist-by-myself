@@ -49,8 +49,7 @@ export const TodolistContainer: React.FC<TodolistContainerPropsType> = ({...prop
         setInput(event.currentTarget.value as string)
     }
     const checkBoxOnChangeHandler = (id: string, isDone: boolean) => {
-
-       setTasks(tasks.map(m => m.id === id ? {...m, isDone: !isDone} : m)) //костыль
+       setTasks(tasks.map(m => m.id === id ? {...m, isDone: isDone} : m))
            }
    const onClickFilterHandler = () => {
 

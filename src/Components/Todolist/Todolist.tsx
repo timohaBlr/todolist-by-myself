@@ -17,9 +17,9 @@ type TodoListPropsType = {
 //презентационная компонента
 export const Todolist: React.FC<TodoListPropsType> = ({
                                                           tasks, buttonOnClickAddHandler, buttonOnClickRemoveHandler,
-                                                          checkBoxOnChangeHandler,inputOnChangeHandler,
+                                                          checkBoxOnChangeHandler, inputOnChangeHandler,
                                                           onKeyPressHandler, error, input, setInput,
-                                                          onClickFilterHandler,...props
+                                                          onClickFilterHandler, ...props
                                                       }) => {
 
     return (
@@ -39,7 +39,7 @@ export const Todolist: React.FC<TodoListPropsType> = ({
                     </div>
                     <div className={s.checkBox}>
                         <input type={"checkbox"}
-                               onChange={() => checkBoxOnChangeHandler(m.id, m.isDone)} //костыль
+                               onChange={(event: ChangeEvent<HTMLInputElement>) => checkBoxOnChangeHandler(m.id, event.currentTarget.checked)}
                                checked={m.isDone}/>
                     </div>
                     {m.title}
@@ -48,7 +48,8 @@ export const Todolist: React.FC<TodoListPropsType> = ({
             <div>
                 <button name={'all'} className={'filterButtonStyle'} onClick={onClickFilterHandler}>All</button>
                 <button name={'active'} className={'filterButtonStyle'} onClick={onClickFilterHandler}>Active</button>
-                <button name={'completed'} className={'filterButtonStyle'} onClick={onClickFilterHandler}>Completed</button>
+                <button name={'completed'} className={'filterButtonStyle'} onClick={onClickFilterHandler}>Completed
+                </button>
             </div>
         </div>
     )
