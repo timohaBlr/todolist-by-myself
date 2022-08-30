@@ -4,3 +4,6 @@
 .checkBox {
     display: inline-block;
 }
+.errorMessage {
+    color: red;
+}

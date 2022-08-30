@@ -1,4 +1,4 @@
-import React, {ChangeEvent, MouseEvent, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, MouseEvent, useState} from 'react';
 import {Todolist} from "./Todolist";
 import {v1} from "uuid";
 
@@ -19,20 +19,30 @@ export const TodolistContainer: React.FC<TodolistContainerPropsType> = ({...prop
         {id: v1(), title: "Rest API", isDone: false},
     ]);
     const [input, setInput] = useState<string>('');
+    const [error, setError] = useState<string | null>(null)
     const buttonOnClickRemoveHandler = () => {
 
     }
-    const buttonOnClickAddHandler = (event: MouseEvent<HTMLButtonElement>) => {
-        addTask(input)
+    const buttonOnClickAddHandler = () => {
+        addTask(input.trim())
         setInput('')
     }
-    const onKeyPressHandler = () => {
-
+    const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            addTask(input.trim())
+            setInput('')
+        }
     }
     const addTask = (title: string) => {
+        if (title.trim() ==='') {
+            setError('Field is required!');
+            return;
+        }
         setTasks([{id: v1(), title: title, isDone: false}, ...tasks])
+        setError(null)
     }
     const inputOnChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+
         setInput(event.currentTarget.value as string)
     }
     const checkBoxOnChangeHandler = () => {
@@ -51,7 +61,8 @@ export const TodolistContainer: React.FC<TodolistContainerPropsType> = ({...prop
                     buttonOnClickRemoveHandler={buttonOnClickRemoveHandler}
                     checkBoxOnChangeHandler={checkBoxOnChangeHandler}
                     inputOnChangeHandler={inputOnChangeHandler}
-                    onKeyPressHandler={onKeyPressHandler}/>
+                    onKeyPressHandler={onKeyPressHandler}
+                    error={error}/>
             </div>
         </div>
     );
