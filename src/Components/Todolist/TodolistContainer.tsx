@@ -8,6 +8,7 @@ export type TaskType = {
     isDone: boolean
 }
 type TodolistContainerPropsType = {}
+type FilterValuesType = 'all' | 'active' | 'completed'
 
 export const TodolistContainer: React.FC<TodolistContainerPropsType> = ({...props}) => {
     const [tasks, setTasks] = useState<Array<TaskType>>([
@@ -20,6 +21,8 @@ export const TodolistContainer: React.FC<TodolistContainerPropsType> = ({...prop
     ]);
     const [input, setInput] = useState<string>('');
     const [error, setError] = useState<string | null>(null)
+    const [filter, setFilter] = useState<FilterValuesType>('all')
+
     const buttonOnClickRemoveHandler = () => {
 
     }
@@ -34,7 +37,7 @@ export const TodolistContainer: React.FC<TodolistContainerPropsType> = ({...prop
         }
     }
     const addTask = (title: string) => {
-        if (title.trim() ==='') {
+        if (title.trim() === '') {
             setError('Field is required!');
             return;
         }
@@ -45,7 +48,11 @@ export const TodolistContainer: React.FC<TodolistContainerPropsType> = ({...prop
 
         setInput(event.currentTarget.value as string)
     }
-    const checkBoxOnChangeHandler = () => {
+    const checkBoxOnChangeHandler = (id: string, isDone: boolean) => {
+
+       setTasks(tasks.map(m => m.id === id ? {...m, isDone: !isDone} : m)) //костыль
+           }
+   const onClickFilterHandler = () => {
 
     }
 
@@ -62,7 +69,8 @@ export const TodolistContainer: React.FC<TodolistContainerPropsType> = ({...prop
                     checkBoxOnChangeHandler={checkBoxOnChangeHandler}
                     inputOnChangeHandler={inputOnChangeHandler}
                     onKeyPressHandler={onKeyPressHandler}
-                    error={error}/>
+                    error={error}
+                    onClickFilterHandler={onClickFilterHandler}/>
             </div>
         </div>
     );

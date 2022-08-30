@@ -6,17 +6,20 @@ type TodoListPropsType = {
     tasks: Array<TaskType>
     buttonOnClickRemoveHandler: () => void
     buttonOnClickAddHandler: () => void
-    checkBoxOnChangeHandler: () => void
+    checkBoxOnChangeHandler: (id: string, isDone: boolean) => void
     inputOnChangeHandler: (event: ChangeEvent<HTMLInputElement>) => void
     onKeyPressHandler: (event: KeyboardEvent<HTMLInputElement>) => void
     input: string
     setInput: (input: string) => void
+    onClickFilterHandler: () => void
     error: string | null
 }
 //презентационная компонента
 export const Todolist: React.FC<TodoListPropsType> = ({
                                                           tasks, buttonOnClickAddHandler, buttonOnClickRemoveHandler,
-                                                          checkBoxOnChangeHandler,inputOnChangeHandler,onKeyPressHandler, error, input, setInput, ...props
+                                                          checkBoxOnChangeHandler,inputOnChangeHandler,
+                                                          onKeyPressHandler, error, input, setInput,
+                                                          onClickFilterHandler,...props
                                                       }) => {
 
     return (
@@ -36,12 +39,17 @@ export const Todolist: React.FC<TodoListPropsType> = ({
                     </div>
                     <div className={s.checkBox}>
                         <input type={"checkbox"}
-                               onChange={checkBoxOnChangeHandler}
+                               onChange={() => checkBoxOnChangeHandler(m.id, m.isDone)} //костыль
                                checked={m.isDone}/>
                     </div>
                     {m.title}
                 </li>)}
             </ul>
+            <div>
+                <button name={'all'} className={'filterButtonStyle'} onClick={onClickFilterHandler}>All</button>
+                <button name={'active'} className={'filterButtonStyle'} onClick={onClickFilterHandler}>Active</button>
+                <button name={'completed'} className={'filterButtonStyle'} onClick={onClickFilterHandler}>Completed</button>
+            </div>
         </div>
     )
         ;
