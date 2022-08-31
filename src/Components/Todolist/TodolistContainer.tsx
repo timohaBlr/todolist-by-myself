@@ -27,6 +27,7 @@ export const TodolistContainer: React.FC<TodolistContainerPropsType> = ({...prop
         setTasks(tasks.filter(f => f.id !== id))
     }
     const buttonOnClickAddHandler = () => {
+        console.log('button clicked')
         addTask(input.trim())
         setInput('')
     }
@@ -51,7 +52,8 @@ export const TodolistContainer: React.FC<TodolistContainerPropsType> = ({...prop
         setTasks(tasks.map(m => m.id === id ? {...m, isDone: isDone} : m))
     }
     const onClickFilterHandler = (event: MouseEvent<HTMLButtonElement>) => {
-        setFilter(event.currentTarget.name as FilterValuesType)
+        console.log( event.currentTarget.textContent!.toLowerCase())
+        setFilter(event.currentTarget.textContent!.toLowerCase() as FilterValuesType)
     }
     const filteredTasks = filter === 'active' ? tasks.filter(f => !f.isDone)
         : filter === 'completed' ? tasks.filter(f => f.isDone) : tasks

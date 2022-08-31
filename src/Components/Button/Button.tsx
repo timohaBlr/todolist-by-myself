@@ -1,14 +1,18 @@
-import React from 'react';
+import React, {MouseEvent} from 'react';
+
+
 
 type ButtonPropsType = {
     title: string
-    callBack: () => void
-}
+    callBack: (event: MouseEvent<HTMLButtonElement>) => void
+    className?: string
+    value?: string
+  }
 export const Button = (props: ButtonPropsType) => {
     return (
         <div>
-            <button type={"button"}
-                    onChange={props.callBack}>
+            <button className={props.className}
+                    onClick={props.callBack}>
                 {props.title}</button>
         </div>
     );
