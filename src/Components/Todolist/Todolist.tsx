@@ -32,8 +32,7 @@ export const Todolist: React.FC<TodoListPropsType> = ({
             <Input value={input}
                    className={error ? s.error : ''}
                    onKeyPress={onKeyPressHandler}
-                   onChange={inputOnChangeHandler}/>
-            {/*universal input*/}
+                   onChange={inputOnChangeHandler}/>            {/*universal input*/}
             {/*<input value={input}
                    className={error ? s.error : ''}
                    onKeyPress={onKeyPressHandler}
@@ -46,8 +45,7 @@ export const Todolist: React.FC<TodoListPropsType> = ({
                 {tasks.map(m => <li key={m.id} className={m.isDone ? s.isDone : ''}>
                     <div className={s.buttonRemove}>
                         <Button title={'X'}
-                                callBack={() => buttonOnClickRemoveHandler(m.id)}/>
-                        {/*universal button*/}
+                                callBack={() => buttonOnClickRemoveHandler(m.id)}/>                        {/*universal button*/}
                         {/* <button onClick={(event) => buttonOnClickRemoveHandler(m.id)}>X</button>*/}
                     </div>
                     <div className={s.checkBox}>
