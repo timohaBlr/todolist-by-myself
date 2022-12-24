@@ -9,7 +9,8 @@ export const CheckBox = (props: CheckBoxPropsType) => {
         <div>
             <input type={'checkbox'}
                    onChange={props.onChange}
-                   checked={props.checked}/>
+                   checked={props.checked}
+            />
         </div>
     );
 };

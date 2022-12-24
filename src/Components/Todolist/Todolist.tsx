@@ -1,4 +1,4 @@
-import React, { MouseEvent} from 'react';
+import React, {ChangeEvent, MouseEvent} from 'react';
 import {FilterValuesType, TaskType} from "./TodolistContainer";
 import s from './Todolist.module.css'
 import {Button} from "../Button/Button";
@@ -6,56 +6,63 @@ import {CheckBox} from "../CheckBox/CheckBox";
 import AddItemForm from "../AddItemForm/AddItemForm";
 
 type TodoListPropsType = {
+    id: string
+    title: string
     tasks: Array<TaskType>
-    buttonOnClickRemoveHandler: (id: string) => void
-    checkBoxOnChangeHandler: (id: string, isDone: boolean) => void
+    removeTask: (id: string, todolistId: string) => void
+    changeTaskStatus: (id: string, isDone: boolean, todolistId: string) => void
     onClickFilterHandler: (event: MouseEvent<HTMLButtonElement>) => void
-    error: string | null
     filter: FilterValuesType
-    addTask: (title: string) => void
-    /* input: string
-     setInput: (input: string) => void
-     buttonOnClickAddHandler: (event: MouseEvent<HTMLButtonElement>) => void
-     inputOnChangeHandler: (event: ChangeEvent<HTMLInputElement>) => void
-     onKeyPressHandler: (event: KeyboardEvent<HTMLInputElement>) => void*/
+    addTask: (title: string, todolistId: string) => void
 }
 //презентационная компонента
 export const Todolist: React.FC<TodoListPropsType> = ({
+                                                          id,
                                                           addTask,
-                                                          tasks, buttonOnClickRemoveHandler,
-                                                          checkBoxOnChangeHandler,
-                                                          error,
-                                                          onClickFilterHandler, filter, ...restProps
+                                                          tasks,
+                                                          removeTask,
+                                                          title,
+                                                          changeTaskStatus,
+                                                          onClickFilterHandler,
+                                                          filter,
+                                                          ...restProps
                                                       }) => {
 
     return (
         <div>
-            <h3>What to learn</h3>
-            <AddItemForm className={error ? s.error : ''}
-                         addTask={addTask}
+            <h3>{title}</h3>
+            <AddItemForm
+                addTask={(e) => addTask(e, id)}
             >Add</AddItemForm>
-            {/*<Input className={error ? s.error : ''}
-                   value={input}
-                   onKeyPress={onKeyPressHandler}
-                   onChange={inputOnChangeHandler}/>
-
-            <Button onClick={buttonOnClickAddHandler}>Add</Button>*/}
-            {error && <div className={s.errorMessage}>{error}</div>}
+            {/* {error && <div className={s.errorMessage}>{error}</div>}*/}
             <ul>
-                {tasks.map(m => <li key={m.id} className={m.isDone ? s.isDone : ''}>
-                    <div className={s.buttonRemove}>
-                        <Button
-                            onClick={() => buttonOnClickRemoveHandler(m.id)}>
-                            x
-                        </Button>
-                    </div>
-                    <div className={s.checkBox}>
-                        <CheckBox onChange={(event) => checkBoxOnChangeHandler(m.id, event.currentTarget.checked)}
-                                  checked={m.isDone}/>
+                {tasks.map(m => {
+                    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+                        changeTaskStatus(m.id, e.currentTarget.checked, id)
 
-                    </div>
-                    {m.title}
-                </li>)}
+                    }
+                    const removeTaskHandler = (e: ChangeEvent<HTMLInputElement>) => {
+                        removeTask(m.id, id)
+                                           }
+
+                    return (
+                        <li key={m.id} className={m.isDone ? s.isDone : ''}>
+                            <div className={s.buttonRemove}>
+                                <Button
+                                    onClick={() => removeTask(m.id, id)}>
+                                    x
+                                </Button>
+                            </div>
+                            <div className={s.checkBox}>
+                                <CheckBox
+
+                                    onChange={onChangeHandler}
+                                    checked={m.isDone}/>
+
+                            </div>
+                            {m.title}
+                        </li>)
+                })}
             </ul>
             <div>
                 <div className={s.filter}>
