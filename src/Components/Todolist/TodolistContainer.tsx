@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, MouseEvent, useState} from 'react';
+import React, { MouseEvent, useState} from 'react';
 import {Todolist} from "./Todolist";
 import {v1} from "uuid";
 
@@ -10,7 +10,7 @@ export type TaskType = {
 type TodolistContainerPropsType = {}
 export type FilterValuesType = 'all' | 'active' | 'completed'
 
-export const TodolistContainer: React.FC<TodolistContainerPropsType> = ({...props}) => {
+export const TodolistContainer: React.FC<TodolistContainerPropsType> = ({...restProps}) => {
     const [tasks, setTasks] = useState<Array<TaskType>>([
         {id: v1(), title: "HTML&CSS", isDone: true},
         {id: v1(), title: "JS", isDone: true},
@@ -19,13 +19,14 @@ export const TodolistContainer: React.FC<TodolistContainerPropsType> = ({...prop
         {id: v1(), title: "GraphQL", isDone: false},
         {id: v1(), title: "Rest API", isDone: false},
     ]);
-    const [input, setInput] = useState<string>('');
+
     const [error, setError] = useState<string | null>(null)
     const [filter, setFilter] = useState<FilterValuesType>('all')
 
     const buttonOnClickRemoveHandler = (id: string) => {
         setTasks(tasks.filter(f => f.id !== id))
     }
+    /*const [input, setInput] = useState<string>('');
     const buttonOnClickAddHandler = () => {
         addTask(input.trim())
         setInput('')
@@ -36,6 +37,9 @@ export const TodolistContainer: React.FC<TodolistContainerPropsType> = ({...prop
             setInput('')
         }
     }
+    const inputOnChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        setInput(event.currentTarget.value as string)
+    }*/
     const addTask = (title: string) => {
         if (title.trim() === '') {
             setError('Field is required!');
@@ -44,33 +48,31 @@ export const TodolistContainer: React.FC<TodolistContainerPropsType> = ({...prop
         setTasks([{id: v1(), title: title, isDone: false}, ...tasks])
         setError(null)
     }
-    const inputOnChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        setInput(event.currentTarget.value as string)
-    }
+
     const checkBoxOnChangeHandler = (id: string, isDone: boolean) => {
         setTasks(tasks.map(m => m.id === id ? {...m, isDone: isDone} : m))
     }
     const onClickFilterHandler = (event: MouseEvent<HTMLButtonElement>) => {
-             setFilter(event.currentTarget.textContent!.toLowerCase() as FilterValuesType)
+        setFilter(event.currentTarget.textContent!.toLowerCase() as FilterValuesType)
     }
     const filteredTasks = filter === 'active' ? tasks.filter(f => !f.isDone)
         : filter === 'completed' ? tasks.filter(f => f.isDone) : tasks
     return (
         <div>
-            <div>
-                <Todolist
-                    tasks={filteredTasks}
-                    input={input}
-                    setInput={setInput}
-                    buttonOnClickAddHandler={buttonOnClickAddHandler}
-                    buttonOnClickRemoveHandler={buttonOnClickRemoveHandler}
-                    checkBoxOnChangeHandler={checkBoxOnChangeHandler}
-                    inputOnChangeHandler={inputOnChangeHandler}
-                    onKeyPressHandler={onKeyPressHandler}
-                    error={error}
-                    onClickFilterHandler={onClickFilterHandler}
-                    filter={filter}/>
-            </div>
+            <Todolist
+                addTask={addTask}
+                tasks={filteredTasks}
+                buttonOnClickRemoveHandler={buttonOnClickRemoveHandler}
+                checkBoxOnChangeHandler={checkBoxOnChangeHandler}
+                error={error}
+                onClickFilterHandler={onClickFilterHandler}
+                filter={filter}
+                /*input={input}
+                setInput={setInput}
+                buttonOnClickAddHandler={buttonOnClickAddHandler}
+                inputOnChangeHandler={inputOnChangeHandler}
+                onKeyPressHandler={onKeyPressHandler}*/
+            />
         </div>
     );
 };

@@ -1,19 +1,19 @@
-import React, {MouseEvent} from 'react';
+import React, {ButtonHTMLAttributes, DetailedHTMLProps} from 'react';
 
 
+type DefaultButtonPropsType = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
+type ButtonPropsType = DefaultButtonPropsType & {
 
-type ButtonPropsType = {
-    title: string
-    callBack: (event: MouseEvent<HTMLButtonElement>) => void
-    className?: string
-    value?: string
-  }
-export const Button = (props: ButtonPropsType) => {
+         }
+
+export const Button: React.FC<ButtonPropsType> = ({  onClick,className,...restProps}) => {
     return (
         <div>
-            <button className={props.className}
-                    onClick={props.callBack}>
-                {props.title}</button>
+            <button className={className}
+                    onClick={onClick}
+                    {...restProps}
+            />
+
         </div>
     );
 };

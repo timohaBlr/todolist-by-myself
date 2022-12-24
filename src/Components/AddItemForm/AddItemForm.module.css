@@ -1,0 +1,7 @@
+.itemForm{
+    display: flex;
+flex-direction: row;
+}
+.error {
+    border: solid 3px red;
+}
