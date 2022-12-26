@@ -6,3 +6,9 @@
 .error {
     border: solid 3px red;
 }
+.errorMessage {
+    color: red;
+}
+.errorMessage:empty {
+    min-height: 21px;
+}

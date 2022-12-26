@@ -12,8 +12,7 @@ export const Button: React.FC<ButtonPropsType> = ({  onClick,className,...restPr
             <button className={className}
                     onClick={onClick}
                     {...restProps}
-            />
-
+                            />
         </div>
     );
 };
